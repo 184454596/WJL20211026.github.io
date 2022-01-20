@@ -1,0 +1,25 @@
+#main.yml
+name: Github Action deploy
+#触发条件
+on:
+  push:
+      branches:
+          - master
+          - dev
+jobs:
+  deploy:
+      #虚拟机环境
+      runs-on: windows-latest 
+      steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with: 
+          node-version: 12.x
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npm run build 
+      #安装miniprogram-ci
+      - name: install miniprogram-ci
+        run: npm install -g miniprogram-ci
+      #使用miniprogram-ci上传代码
